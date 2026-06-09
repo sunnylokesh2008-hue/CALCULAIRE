@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CALCULAIRE™ ELITE — The World's Most Exclusive Calculator</title>
+<link rel="stylesheet" href="/static/styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Inter:wght@100;200;300;400;500&family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- Custom cursor -->
+ <div class="amount-wrap">
+
+    <label class="amount-label">
+        ACCESS CONTRIBUTION
+    </label>
+
+    
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <!-- Ambient canvas -->
+  <canvas id="ambientCanvas"></canvas>
+
+  <!-- Loading screen -->
+  <div class="loader" id="loader">
+    <div class="loader-inner">
+      <div class="loader-logo">CALCULAIRE™</div>
+      <div class="loader-bar-wrap">
+        <div class="loader-bar" id="loaderBar"></div>
+      </div>
+      <div class="loader-status" id="loaderStatus">Calibrating Luxury Engines…</div>
+    </div>
+  </div>
+
+  <!-- ──────────────────────────── SECTION 1: HERO ──────────────────────────── -->
+  <section class="hero" id="hero">
+    <div class="hero-bg-orb orb-1"></div>
+    <div class="hero-bg-orb orb-2"></div>
+    <div class="hero-bg-orb orb-3"></div>
+
+    <nav class="nav">
+      <div class="nav-brand">C™E</div>
+      <div class="nav-links">
+        <a href="#calculator">Compute</a>
+    <a href="/admin/login" class="nav-cta">Elite Access</a>
+      </div>
+    </nav>
+
+    <div class="hero-content">
+      <div class="hero-eyebrow">
+        <span class="eyebrow-dot"></span>
+        <span>Established 2025 · Lausanne · Limited Access</span>
+      </div>
+
+      <h1 class="hero-title">
+        <span class="title-line" data-text="CALCULAIRE">CALCULAIRE</span>
+        <span class="title-sup">™</span>
+        <span class="title-line title-elite" data-text="ELITE">ELITE</span>
+      </h1>
+
+      <p class="hero-tagline">The World's Most Exclusive Calculator</p>
+
+      <p class="hero-desc">
+        Every computation is routed through our sovereign quantum infrastructure, 
+        validated by a council of former central bank governors, and delivered 
+        via encrypted light-speed neural relay. Your arithmetic deserves nothing less.
+      </p>
+
+      <a href="#calculator" class="cta-btn" id="heroCta">
+        <span class="cta-text">Begin Computation</span>
+        <span class="cta-arrow">→</span>
+        <div class="cta-shimmer"></div>
+      </a>
+
+      <div class="hero-badges">
+        <div class="badge">ISO 9001 Certified</div>
+        <div class="badge-sep">·</div>
+        <div class="badge">Quantum Secured</div>
+        <div class="badge-sep">·</div>
+        <div class="badge">Gold Standard</div>
+      </div>
+    </div>
+
+    <div class="hero-scroll-hint">
+      <div class="scroll-line"></div>
+      <span>Scroll</span>
+    </div>
+  </section>
+
+  <!-- ──────────────────────────── SECTION 2: CALCULATOR ──────────────────────────── -->
+  <section class="calc-section" id="calculator">
+    <div class="section-label">§ 02 — Computational Interface</div>
+
+    <div class="calc-wrap">
+      <div class="calc-header">
+        <h2 class="calc-title">Enter Your<br /><em>Mathematical Intent</em></h2>
+        <p class="calc-sub">All expressions processed on our 47-node quantum lattice in Lausanne.</p>
+      </div>
+
+      <!-- Mode selector -->
+      <div class="mode-selector">
+       <button class="mode-btn active" data-mode="standard">Standard</button>
+<button class="mode-btn" data-mode="scientific">Scientific</button>
+      </div>
+
+      <!-- Glass panel -->
+      <div class="glass-panel calc-panel">
+        <div class="panel-glow"></div>
+
+        <!-- Display -->
+        <div class="calc-display" id="calcDisplay">
+          <div class="display-expr" id="displayExpr">0</div>
+          <div class="display-hint">Enter expression, then Compute</div>
+        </div>
+
+        <!-- Keypad -->
+        <div class="keypad">
+          <button class="key key-clear" data-action="clear">AC</button>
+          <button class="key key-op" data-action="backspace">⌫</button>
+          <button class="key key-op" data-val="%">%</button>
+          <button class="key key-op key-div" data-val="÷">÷</button>
+
+          <button class="key" data-val="7">7</button>
+          <button class="key" data-val="8">8</button>
+          <button class="key" data-val="9">9</button>
+          <button class="key key-op key-mul" data-val="×">×</button>
+
+          <button class="key" data-val="4">4</button>
+          <button class="key" data-val="5">5</button>
+          <button class="key" data-val="6">6</button>
+          <button class="key key-op key-sub" data-val="−">−</button>
+
+          <button class="key" data-val="1">1</button>
+          <button class="key" data-val="2">2</button>
+          <button class="key" data-val="3">3</button>
+          <button class="key key-op key-add" data-val="+">+</button>
+
+          <button class="key key-zero" data-val="0">0</button>
+          <button class="key" data-val=".">.</button>
+          <button class="key key-equals" data-action="calculate">=</button>
+        </div>
+      </div>
+
+      <!-- Processing overlay -->
+      <div class="processing-overlay" id="processingOverlay">
+        <div class="processing-inner">
+          <div class="proc-logo">⬡</div>
+          <div class="proc-title">Processing</div>
+          <div class="proc-status" id="procStatus">Initializing Quantum Engine…</div>
+          <div class="proc-bar-wrap">
+            <div class="proc-bar" id="procBar"></div>
+          </div>
+          <div class="proc-metrics">
+            <div class="metric"><span class="m-label">Nodes</span><span class="m-val" id="mNodes">0</span></div>
+            <div class="metric"><span class="m-label">TFlops</span><span class="m-val" id="mTflops">0.00</span></div>
+            <div class="metric"><span class="m-label">Latency</span><span class="m-val" id="mLatency">—</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ──────────────────────────── SECTION 3: PAYWALL ──────────────────────────── -->
+  <section class="paywall-section" id="paywall" style="display:none;">
+    <div class="section-label">§ 03 — Result Vault</div>
+
+    <div class="paywall-wrap">
+      <div class="result-card glass-panel" id="resultCard">
+        <div class="panel-glow glow-gold"></div>
+
+        <div class="rc-header">
+          <div class="rc-logo">⬡</div>
+          <div class="rc-tier">ELITE COMPUTATION COMPLETE</div>
+        </div>
+
+        <div class="rc-expr-display" id="rcExpr"></div>
+
+        <div class="rc-result-blur" id="rcResultBlur">
+          <div class="blur-inner" id="blurValue"></div>
+          <div class="blur-overlay"></div>
+          <div class="blur-label">Result Secured</div>
+        </div>
+
+        <div class="rc-mode-label" id="rcModeLabel"></div>
+
+      <div class="rc-unlock">
+
+    <div class="unlock-text">Unlock Elite Insight</div>
+
+    <div class="unlock-sub">
+        Your answer awaits behind one decisive act of commitment
+    </div>
+
+    <div class="premium-amount-wrap">
+
+        <input
+            type="number"
+            id="paymentAmount"
+            min="1"
+            value="1"
+            class="premium-amount-input"
+        >
+
+    </div>
+
+    <div class="amount-preview">
+        Contribution: ₹<span id="amountPreview">1.00</span>
+    </div>
+
+    <button class="pay-btn" id="payBtn">
+        <span class="pay-label">ACCESS RESULT</span>
+    </button>
+
+    <div class="pay-assurance">
+        256-bit encrypted · Quantum secured · No refunds on enlightenment
+    </div>
+
+</div>
+
+        <div class="rc-features">
+          <div class="rc-feat">✦ Processed across 47 quantum nodes</div>
+          <div class="rc-feat">✦ Validated by 3 ex-IMF officials</div>
+          <div class="rc-feat">✦ Stored in Swiss blockchain vault</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ──────────────────────────── SECTION 4: REVEAL ──────────────────────────── -->
+  <div class="reveal-overlay" id="revealOverlay">
+    <canvas id="revealCanvas"></canvas>
+    <div class="reveal-content" id="revealContent">
+      <div class="reveal-eyebrow">CALCULAIRE™ ELITE PRESENTS</div>
+      <div class="reveal-answer" id="revealAnswer"></div>
+      <div class="reveal-expr" id="revealExpr"></div>
+      <div class="reveal-mode-text" id="revealModeText"></div>
+      <div class="reveal-thanks">Thank you for choosing CALCULAIRE™ ELITE.</div>
+      <button class="reveal-again" id="revealAgain">Compute Again</button>
+    </div>
+  </div>
+
+  <!-- Three.js & GSAP CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollToPlugin.min.js"></script>
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script src="/static/script.js"></script>
+</body>
+</html>

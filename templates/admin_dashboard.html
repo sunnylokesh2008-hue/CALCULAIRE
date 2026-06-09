@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>CALCULAIRE Control Center</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    background:#050505;
+    color:white;
+    font-family:Segoe UI;
+    padding:40px;
+}
+
+.header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:40px;
+}
+
+.logo{
+    font-size:34px;
+    font-weight:700;
+    color:#c8a96e;
+    letter-spacing:2px;
+}
+
+.logout{
+    text-decoration:none;
+    color:#c8a96e;
+    border:1px solid #c8a96e;
+    padding:10px 18px;
+    border-radius:8px;
+}
+
+.cards{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:25px;
+}
+
+.card{
+    background:#111;
+    border:1px solid rgba(200,169,110,.25);
+    border-radius:18px;
+    padding:25px;
+}
+
+.card-title{
+    color:#888;
+    margin-bottom:15px;
+}
+
+.card-value{
+    font-size:42px;
+    font-weight:700;
+    color:#c8a96e;
+}
+
+.section-title{
+    margin-top:50px;
+    margin-bottom:20px;
+    color:#c8a96e;
+}
+
+.table-wrap{
+    background:#111;
+    border-radius:18px;
+    overflow:hidden;
+    border:1px solid rgba(200,169,110,.25);
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+th{
+    background:#161616;
+    color:#c8a96e;
+    padding:16px;
+}
+
+td{
+    padding:16px;
+    border-top:1px solid #222;
+}
+
+tr:hover{
+    background:#181818;
+}
+.logout-btn{
+    text-decoration:none;
+    color:#c8a96e;
+    border:1px solid #c8a96e;
+    padding:12px 20px;
+    border-radius:10px;
+    transition:.3s;
+}
+
+.logout-btn:hover{
+    background:#c8a96e;
+    color:black;
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+    <div class="logo">CALCULAIRE™</div>
+
+   <a href="/admin/logout" class="logout-btn">Logout</a>
+</div>
+
+<div class="cards">
+
+    <div class="card">
+        <div class="card-title">Total Payments</div>
+        <div class="card-value">
+            {{ total_payments }}
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-title">Revenue</div>
+        <div class="card-value">
+            ₹ {{ total_revenue }}
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-title">Platform Status</div>
+        <div class="card-value">
+            LIVE
+        </div>
+    </div>
+
+</div>
+
+<h2 class="section-title">
+Recent Transactions
+</h2>
+
+<div class="table-wrap">
+
+<table>
+
+<tr>
+    <th>Payment ID</th>
+    <th>Amount</th>
+    <th>Mode</th>
+    <th>Date</th>
+</tr>
+
+{% for p in recent_payments %}
+
+<tr>
+    <td>{{ p[0] }}</td>
+    <td>₹ {{ p[1] }}</td>
+    <td>{{ p[2] }}</td>
+    <td>{{ p[3] }}</td>
+</tr>
+
+{% endfor %}
+
+</table>
+
+</div>
+
+</body>
+</html>
