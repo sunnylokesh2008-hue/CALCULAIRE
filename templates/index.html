@@ -3,251 +3,408 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CALCULAIRE™ ELITE — The World's Most Exclusive Calculator</title>
-<link rel="stylesheet" href="/static/styles.css">
+  <meta name="theme-color" content="#05070d" />
+  <title>CALCULAIRE&trade; ELITE 2026</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Inter:wght@100;200;300;400;500&family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/styles.css" />
 </head>
-<body>
+<body data-theme="{{ (current_user.theme if current_user else 'dark') }}">
+  <script id="bootstrapData" type="application/json">
+    {{ {
+      "user": current_user,
+      "ownedPackages": owned_packages,
+      "packages": package_catalog,
+      "minResultAmount": min_result_amount,
+      "csrfToken": csrf_token
+    } | tojson }}
+  </script>
 
-  <!-- Custom cursor -->
- <div class="amount-wrap">
+  <a class="skip-link" href="#mainContent">Skip to content</a>
 
-    <label class="amount-label">
-        ACCESS CONTRIBUTION
-    </label>
+  <canvas id="ambientCanvas" aria-hidden="true"></canvas>
+  <canvas id="splashCursor" class="splash-cursor-canvas" aria-hidden="true"></canvas>
 
-    
-  <div class="cursor-ring" id="cursorRing"></div>
-
-  <!-- Ambient canvas -->
-  <canvas id="ambientCanvas"></canvas>
-
-  <!-- Loading screen -->
   <div class="loader" id="loader">
     <div class="loader-inner">
-      <div class="loader-logo">CALCULAIRE™</div>
-      <div class="loader-bar-wrap">
-        <div class="loader-bar" id="loaderBar"></div>
-      </div>
-      <div class="loader-status" id="loaderStatus">Calibrating Luxury Engines…</div>
+      <div class="loader-mark">C&trade;E</div>
+      <div class="loader-copy">CALCULAIRE ELITE 2026</div>
+      <div class="loader-bar-wrap"><div class="loader-bar" id="loaderBar"></div></div>
+      <div class="loader-status" id="loaderStatus">Calibrating orbital interface</div>
     </div>
   </div>
 
-  <!-- ──────────────────────────── SECTION 1: HERO ──────────────────────────── -->
-  <section class="hero" id="hero">
-    <div class="hero-bg-orb orb-1"></div>
-    <div class="hero-bg-orb orb-2"></div>
-    <div class="hero-bg-orb orb-3"></div>
+  <nav class="nav" id="nav" role="navigation">
+    <div class="nav-left">
+      <a class="nav-brand" href="#hero" aria-label="CALCULAIRE Elite home">
+        <span>C&trade;E</span>
+        <small>CALCULAIRE ELITE</small>
+      </a>
+    </div>
 
-    <nav class="nav">
-      <div class="nav-brand">C™E</div>
+    <div class="nav-center" aria-hidden="false">
       <div class="nav-links">
         <a href="#calculator">Compute</a>
-    <a href="/admin/login" class="nav-cta">Elite Access</a>
-      </div>
-    </nav>
-
-    <div class="hero-content">
-      <div class="hero-eyebrow">
-        <span class="eyebrow-dot"></span>
-        <span>Established 2025 · Lausanne · Limited Access</span>
-      </div>
-
-      <h1 class="hero-title">
-        <span class="title-line" data-text="CALCULAIRE">CALCULAIRE</span>
-        <span class="title-sup">™</span>
-        <span class="title-line title-elite" data-text="ELITE">ELITE</span>
-      </h1>
-
-      <p class="hero-tagline">The World's Most Exclusive Calculator</p>
-
-      <p class="hero-desc">
-        Every computation is routed through our sovereign quantum infrastructure, 
-        validated by a council of former central bank governors, and delivered 
-        via encrypted light-speed neural relay. Your arithmetic deserves nothing less.
-      </p>
-
-      <a href="#calculator" class="cta-btn" id="heroCta">
-        <span class="cta-text">Begin Computation</span>
-        <span class="cta-arrow">→</span>
-        <div class="cta-shimmer"></div>
-      </a>
-
-      <div class="hero-badges">
-        <div class="badge">ISO 9001 Certified</div>
-        <div class="badge-sep">·</div>
-        <div class="badge">Quantum Secured</div>
-        <div class="badge-sep">·</div>
-        <div class="badge">Gold Standard</div>
+        <a href="#library">Library</a>
+        <a href="#paywall">Access</a>
       </div>
     </div>
 
-    <div class="hero-scroll-hint">
-      <div class="scroll-line"></div>
-      <span>Scroll</span>
-    </div>
-  </section>
+    <div class="nav-right">
+      <button class="icon-btn theme-toggle" id="themeToggle" type="button" aria-label="Cycle themes">
+        <span class="theme-icon sun"></span>
+        <span class="theme-icon moon"></span>
+      </button>
+      <button class="nav-account access-btn" id="accountShortcut" type="button" aria-haspopup="true" aria-expanded="false">Access Portal</button>
 
-  <!-- ──────────────────────────── SECTION 2: CALCULATOR ──────────────────────────── -->
-  <section class="calc-section" id="calculator">
-    <div class="section-label">§ 02 — Computational Interface</div>
-
-    <div class="calc-wrap">
-      <div class="calc-header">
-        <h2 class="calc-title">Enter Your<br /><em>Mathematical Intent</em></h2>
-        <p class="calc-sub">All expressions processed on our 47-node quantum lattice in Lausanne.</p>
-      </div>
-
-      <!-- Mode selector -->
-      <div class="mode-selector">
-       <button class="mode-btn active" data-mode="standard">Standard</button>
-<button class="mode-btn" data-mode="scientific">Scientific</button>
-      </div>
-
-      <!-- Glass panel -->
-      <div class="glass-panel calc-panel">
-        <div class="panel-glow"></div>
-
-        <!-- Display -->
-        <div class="calc-display" id="calcDisplay">
-          <div class="display-expr" id="displayExpr">0</div>
-          <div class="display-hint">Enter expression, then Compute</div>
-        </div>
-
-        <!-- Keypad -->
-        <div class="keypad">
-          <button class="key key-clear" data-action="clear">AC</button>
-          <button class="key key-op" data-action="backspace">⌫</button>
-          <button class="key key-op" data-val="%">%</button>
-          <button class="key key-op key-div" data-val="÷">÷</button>
-
-          <button class="key" data-val="7">7</button>
-          <button class="key" data-val="8">8</button>
-          <button class="key" data-val="9">9</button>
-          <button class="key key-op key-mul" data-val="×">×</button>
-
-          <button class="key" data-val="4">4</button>
-          <button class="key" data-val="5">5</button>
-          <button class="key" data-val="6">6</button>
-          <button class="key key-op key-sub" data-val="−">−</button>
-
-          <button class="key" data-val="1">1</button>
-          <button class="key" data-val="2">2</button>
-          <button class="key" data-val="3">3</button>
-          <button class="key key-op key-add" data-val="+">+</button>
-
-          <button class="key key-zero" data-val="0">0</button>
-          <button class="key" data-val=".">.</button>
-          <button class="key key-equals" data-action="calculate">=</button>
-        </div>
-      </div>
-
-      <!-- Processing overlay -->
-      <div class="processing-overlay" id="processingOverlay">
-        <div class="processing-inner">
-          <div class="proc-logo">⬡</div>
-          <div class="proc-title">Processing</div>
-          <div class="proc-status" id="procStatus">Initializing Quantum Engine…</div>
-          <div class="proc-bar-wrap">
-            <div class="proc-bar" id="procBar"></div>
+      <div class="access-dropdown" id="accessDropdown" aria-hidden="true">
+        <!-- Guest mode: show login/register/admin -->
+        <div class="access-panel-guest" id="accessPanelGuest">
+          <div class="access-panel user-access">
+            <h4>USER</h4>
+            <button type="button" class="access-item" data-access-action="login">Login</button>
+            <button type="button" class="access-item" data-access-action="register">Register</button>
           </div>
-          <div class="proc-metrics">
-            <div class="metric"><span class="m-label">Nodes</span><span class="m-val" id="mNodes">0</span></div>
-            <div class="metric"><span class="m-label">TFlops</span><span class="m-val" id="mTflops">0.00</span></div>
-            <div class="metric"><span class="m-label">Latency</span><span class="m-val" id="mLatency">—</span></div>
+          <div class="access-divider" aria-hidden="true"></div>
+          <div class="access-panel admin-access">
+            <h4>ADMIN</h4>
+            <button type="button" class="access-item admin-only" data-access-action="admin">Admin Login</button>
+          </div>
+        </div>
+        <!-- Logged-in mode: show account menu -->
+        <div class="access-panel-user" id="accessPanelUser" hidden>
+          <div class="access-panel">
+            <h4>ACCOUNT</h4>
+            <button type="button" class="access-item" data-access-action="my-account">My Account</button>
+            <button type="button" class="access-item" data-access-action="my-purchases">My Purchases</button>
+          </div>
+          <div class="access-divider" aria-hidden="true"></div>
+          <div class="access-panel">
+            <button type="button" class="access-item logout-item" data-access-action="logout">Logout</button>
           </div>
         </div>
       </div>
     </div>
-  </section>
+  </nav>
 
-  <!-- ──────────────────────────── SECTION 3: PAYWALL ──────────────────────────── -->
-  <section class="paywall-section" id="paywall" style="display:none;">
-    <div class="section-label">§ 03 — Result Vault</div>
-
-    <div class="paywall-wrap">
-      <div class="result-card glass-panel" id="resultCard">
-        <div class="panel-glow glow-gold"></div>
-
-        <div class="rc-header">
-          <div class="rc-logo">⬡</div>
-          <div class="rc-tier">ELITE COMPUTATION COMPLETE</div>
+  <main id="mainContent">
+    <section class="hero" id="hero">
+      <div class="hero-grid">
+        <div class="hero-copy">
+          <div class="eyebrow"><span></span> Flagship arithmetic interface</div>
+          <h1>CALCULAIRE&trade; ELITE</h1>
+          <p class="hero-kicker">A cinematic calculator platform for precision math, premium insight, and verified digital ownership.</p>
+          <div class="hero-actions">
+            <a class="primary-btn magnetic" href="#calculator">Begin Computation</a>
+            <a class="ghost-btn magnetic" href="#library">Math Library</a>
+          </div>
         </div>
 
-        <div class="rc-expr-display" id="rcExpr"></div>
-
-        <div class="rc-result-blur" id="rcResultBlur">
-          <div class="blur-inner" id="blurValue"></div>
-          <div class="blur-overlay"></div>
-          <div class="blur-label">Result Secured</div>
-        </div>
-
-        <div class="rc-mode-label" id="rcModeLabel"></div>
-
-      <div class="rc-unlock">
-
-    <div class="unlock-text">Unlock Elite Insight</div>
-
-    <div class="unlock-sub">
-        Your answer awaits behind one decisive act of commitment
-    </div>
-
-    <div class="premium-amount-wrap">
-
-        <input
-            type="number"
-            id="paymentAmount"
-            min="1"
-            value="1"
-            class="premium-amount-input"
-        >
-
-    </div>
-
-    <div class="amount-preview">
-        Contribution: ₹<span id="amountPreview">1.00</span>
-    </div>
-
-    <button class="pay-btn" id="payBtn">
-        <span class="pay-label">ACCESS RESULT</span>
-    </button>
-
-    <div class="pay-assurance">
-        256-bit encrypted · Quantum secured · No refunds on enlightenment
-    </div>
-
-</div>
-
-        <div class="rc-features">
-          <div class="rc-feat">✦ Processed across 47 quantum nodes</div>
-          <div class="rc-feat">✦ Validated by 3 ex-IMF officials</div>
-          <div class="rc-feat">✦ Stored in Swiss blockchain vault</div>
+        <div class="hero-device" aria-hidden="true">
+          <div class="device-toolbar">
+            <span></span><span></span><span></span>
+          </div>
+          <div class="device-display showcase-core">
+            <h3>CALCULAIRE&trade; CORE</h3>
+            <p>Luxury computational architecture · Real-time scientific engine · Secure result vault</p>
+            <div class="device-orbit-visual" aria-hidden="true"></div>
+          </div>
         </div>
       </div>
-    </div>
-  </section>
+      <div class="hero-metrics">
+        <div class="showcase-cards">
+          <article class="showcase-card">
+            <strong>PRECISION ENGINE</strong>
+            <span>Verified computational core</span>
+          </article>
+          <article class="showcase-card">
+            <strong>SCIENTIFIC SUITE</strong>
+            <span>Advanced mathematical functions</span>
+          </article>
+          <article class="showcase-card">
+            <strong>SECURE RESULTS</strong>
+            <span>Verified access architecture</span>
+          </article>
+        </div>
+      </div>
+    </section>
 
-  <!-- ──────────────────────────── SECTION 4: REVEAL ──────────────────────────── -->
+    <section class="calculator-section" id="calculator">
+      <div class="section-heading">
+        <span>02 / Compute</span>
+        <h2>Luxury-grade calculation engine</h2>
+      </div>
+
+      <div class="calculator-layout">
+        <aside class="calc-sidebar panel">
+          <div class="panel-heading">
+            <span>Session</span>
+            <strong id="sessionModeLabel">Standard</strong>
+          </div>
+
+          <div class="memory-strip">
+            <button class="mini-btn" data-action="memory-clear" type="button">MC</button>
+            <button class="mini-btn" data-action="memory-recall" type="button">MR</button>
+            <button class="mini-btn" data-action="memory-add" type="button">M+</button>
+            <button class="mini-btn" data-action="memory-subtract" type="button">M-</button>
+          </div>
+
+          <div class="history-panel">
+            <label class="subhead" for="historySearch">Account history</label>
+            <input id="historySearch" type="search" placeholder="Search calculations" aria-label="Search calculation history" />
+            <div class="history-list" id="historyList">
+              <div class="empty-state">No calculations yet.</div>
+            </div>
+          </div>
+        </aside>
+
+        <div class="calculator-core panel" id="calculatorCore">
+          <div class="calc-topbar">
+            <div class="segmented" role="tablist" aria-label="Calculator mode">
+              <button class="segment active" data-mode="standard" type="button">Standard</button>
+              <button class="segment" data-mode="scientific" type="button">Scientific</button>
+            </div>
+            <button class="angle-toggle" id="angleToggle" type="button" aria-label="Toggle degrees and radians">DEG</button>
+          </div>
+
+          <div class="display">
+            <div class="display-expression" id="displayExpr">0</div>
+            <div class="display-result" id="displayResult">Ready</div>
+          </div>
+
+          <div class="scientific-pad" id="scientificPad">
+            <button class="key sci" data-token="sin(" type="button">sin</button>
+            <button class="key sci" data-token="cos(" type="button">cos</button>
+            <button class="key sci" data-token="tan(" type="button">tan</button>
+            <button class="key sci" data-token="asin(" type="button">asin</button>
+            <button class="key sci" data-token="acos(" type="button">acos</button>
+            <button class="key sci" data-token="atan(" type="button">atan</button>
+            <button class="key sci" data-token="sinh(" type="button">sinh</button>
+            <button class="key sci" data-token="cosh(" type="button">cosh</button>
+            <button class="key sci" data-token="tanh(" type="button">tanh</button>
+            <button class="key sci" data-token="log10(" type="button">log</button>
+            <button class="key sci" data-token="log(" type="button">ln</button>
+            <button class="key sci" data-token="sqrt(" type="button">sqrt</button>
+            <button class="key sci" data-token="cbrt(" type="button">cbrt</button>
+            <button class="key sci" data-token="root(" type="button">n√x</button>
+            <button class="key sci" data-token="^2" type="button">x<sup>2</sup></button>
+            <button class="key sci" data-token="^3" type="button">x<sup>3</sup></button>
+            <button class="key sci" data-token="^" type="button">x<sup>y</sup></button>
+            <button class="key sci" data-token="!" type="button">x!</button>
+            <button class="key sci" data-token="pi" type="button">&pi;</button>
+            <button class="key sci" data-token="e" type="button">e</button>
+            <button class="key sci" data-token=" mod " type="button">mod</button>
+            <button class="key sci" data-token="E" type="button">EXP</button>
+          </div>
+
+          <div class="keypad" id="keypad">
+            <button class="key danger" data-action="clear" type="button">AC</button>
+            <button class="key muted" data-action="backspace" type="button">DEL</button>
+            <button class="key operator" data-token="(" type="button">(</button>
+            <button class="key operator" data-token=")" type="button">)</button>
+            <button class="key operator" data-token="%" type="button">%</button>
+
+            <button class="key" data-token="7" type="button">7</button>
+            <button class="key" data-token="8" type="button">8</button>
+            <button class="key" data-token="9" type="button">9</button>
+            <button class="key operator" data-token="/" type="button">&divide;</button>
+            <button class="key muted" data-action="copy" type="button">COPY</button>
+
+            <button class="key" data-token="4" type="button">4</button>
+            <button class="key" data-token="5" type="button">5</button>
+            <button class="key" data-token="6" type="button">6</button>
+            <button class="key operator" data-token="*" type="button">&times;</button>
+            <button class="key muted" data-token="," type="button">,</button>
+
+            <button class="key" data-token="1" type="button">1</button>
+            <button class="key" data-token="2" type="button">2</button>
+            <button class="key" data-token="3" type="button">3</button>
+            <button class="key operator" data-token="-" type="button">&minus;</button>
+            <button class="key muted" data-token="." type="button">.</button>
+
+            <button class="key wide" data-token="0" type="button">0</button>
+            <button class="key operator" data-token="+" type="button">+</button>
+            <button class="key equals" data-action="calculate" type="button">=</button>
+          </div>751
+          
+
+          <div class="processing-overlay" id="processingOverlay">
+            <div class="processing-inner">
+              <div class="processing-ring"></div>
+              <strong>Processing</strong>
+              <span id="procStatus">Initializing calculation engine</span>
+              <div class="proc-bar-wrap"><div class="proc-bar" id="procBar"></div></div>
+              <div class="proc-metrics">
+                <div><span>Nodes</span><b id="mNodes">0</b></div>
+                <div><span>TFlops</span><b id="mTflops">0.00</b></div>
+                <div><span>Latency</span><b id="mLatency">--</b></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <aside class="ai-panel panel">
+          <div class="panel-heading">
+            <span>Verified Insight</span>
+            <strong id="aiState">Idle</strong>
+          </div>
+          <div class="ai-answer" id="aiAnswer">--</div>
+          <div class="ai-meta" id="aiFormula">Formula will appear after calculation.</div>
+          <div class="ai-steps" id="aiSteps"></div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- Paywall section removed: results now visible without payment -->
+
+    <section class="library-section" id="library">
+      <div class="section-heading">
+        <span>04 / Math Library</span>
+        <h2>Permanent premium access</h2>
+      </div>
+
+      <div class="library-layout">
+        <div class="account-panel panel" id="accountPanel">
+          <div class="panel-heading">
+            <span>Account summary</span>
+            <strong id="accountStatus">Guest</strong>
+          </div>
+
+          <div class="account-summary compact" id="accountSummary">
+            <div><span>Name</span><strong id="accountName">Guest</strong></div>
+            <div><span>Email</span><strong id="accountEmail">—</strong></div>
+            <div><span>Status</span><strong id="accountVerified">Guest</strong></div>
+          </div>
+
+          <div class="account-actions" id="accountActions">
+            <button class="primary-btn" id="accountLoginShortcut" type="button">Login / Register</button>
+            <button class="ghost-btn" id="accountAdminShortcut" type="button">Admin Login</button>
+          </div>
+
+          <div class="auth-message" id="authMessage"></div>
+        </div>
+
+        <div class="store-panel panel">
+          <div class="package-grid">
+            <article class="package-card" data-package-card="tables">
+              <div>
+                <span>Tables Package</span>
+                <h3>&#8377;20 Lifetime</h3>
+                <p>Tables 1-100, search, and interactive practice.</p>
+              </div>
+              <button class="primary-btn package-buy" data-package="tables" type="button">Buy Tables</button>
+              <button class="ghost-btn package-open" data-open-package="tables" type="button">Open Tables</button>
+            </article>
+
+            <article class="package-card" data-package-card="squares">
+              <div>
+                <span>Squares Package</span>
+                <h3>&#8377;20 Lifetime</h3>
+                <p>Squares 1-1000, cube values, and quick lookup.</p>
+              </div>
+              <button class="primary-btn package-buy" data-package="squares" type="button">Buy Squares</button>
+              <button class="ghost-btn package-open" data-open-package="squares" type="button">Open Squares</button>
+            </article>
+
+            <article class="package-card featured" data-package-card="bundle">
+              <div>
+                <span>Math Master Bundle</span>
+                <h3>&#8377;35 Lifetime</h3>
+                <p>Tables, practice, squares, cubes, and roots under one permanent account license.</p>
+              </div>
+              <button class="primary-btn package-buy" data-package="bundle" type="button">Buy Bundle</button>
+              <button class="ghost-btn package-open" data-open-package="tables" type="button">Open Library</button>
+            </article>
+          </div>
+
+          <div class="library-viewer" id="libraryViewer">
+            <div class="library-toolbar">
+              <strong id="libraryTitle">Library Vault</strong>
+              <div class="library-actions">
+                <button class="ghost-btn inline" id="practiceBtn" type="button" hidden>Practice</button>
+                <input id="librarySearch" type="search" placeholder="Search number" aria-label="Search library by number" />
+              </div>
+            </div>
+            <div class="library-content" id="libraryContent">
+              <div class="empty-state">Purchase a package to open the vault.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <strong>CALCULAIRE ELITE</strong>
+        <small>Built by Lokesh</small>
+      </div>
+      <nav class="footer-links">
+        <a href="#calculator">Compute</a>
+        <a href="#library">Library</a>
+        <a href="/privacy">Privacy</a>
+        <a href="/terms">Terms</a>
+        <a href="/contact">Contact</a>
+      </nav>
+      <div class="footer-meta">
+        <span>© <span id="footerYear">2026</span> CALCULAIRE ELITE</span>
+      </div>
+    </div>
+  </footer>
+
   <div class="reveal-overlay" id="revealOverlay">
     <canvas id="revealCanvas"></canvas>
     <div class="reveal-content" id="revealContent">
-      <div class="reveal-eyebrow">CALCULAIRE™ ELITE PRESENTS</div>
-      <div class="reveal-answer" id="revealAnswer"></div>
-      <div class="reveal-expr" id="revealExpr"></div>
-      <div class="reveal-mode-text" id="revealModeText"></div>
-      <div class="reveal-thanks">Thank you for choosing CALCULAIRE™ ELITE.</div>
-      <button class="reveal-again" id="revealAgain">Compute Again</button>
+      <span>CALCULAIRE&trade; ELITE PRESENTS</span>
+      <strong id="revealAnswer">--</strong>
+      <em id="revealExpr">--</em>
+      <p id="revealModeText">--</p>
+      <button class="primary-btn" id="revealAgain" type="button">Compute Again</button>
     </div>
   </div>
 
-  <!-- Three.js & GSAP CDN -->
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <!-- Login/Register modal for purchase gate (guest trying to buy) -->
+  <div class="auth-modal" id="authModal" role="dialog" aria-labelledby="authModalTitle" aria-hidden="true">
+    <div class="auth-modal-overlay"></div>
+    <div class="auth-modal-content">
+      <div class="auth-modal-header">
+        <h2 id="authModalTitle">Sign in to save purchases</h2>
+        <button class="modal-close" id="authModalClose" type="button" aria-label="Close modal">×</button>
+      </div>
+      <div class="auth-modal-body">
+        <div class="auth-modal-message">
+          <p>Create an account or login to permanently save your packages and purchases.</p>
+        </div>
+        <div class="auth-modal-tabs">
+          <button class="auth-modal-tab active" data-auth-mode="login" type="button">Login</button>
+          <button class="auth-modal-tab" data-auth-mode="register" type="button">Register</button>
+        </div>
+        <form class="auth-modal-form active" id="authModalLoginForm">
+          <input name="email" type="email" placeholder="Email" autocomplete="email" aria-label="Login email" required />
+          <input name="password" type="password" placeholder="Password" autocomplete="current-password" aria-label="Login password" required />
+          <button class="primary-btn" type="submit">Login</button>
+        </form>
+        <form class="auth-modal-form" id="authModalRegisterForm">
+          <input name="name" type="text" placeholder="Name" autocomplete="name" aria-label="Full name" required />
+          <input name="email" type="email" placeholder="Email" autocomplete="email" aria-label="Registration email" required />
+          <input name="password" type="password" placeholder="Password" autocomplete="new-password" aria-label="Create password" minlength="8" required />
+          <button class="primary-btn" type="submit">Create Account</button>
+        </form>
+        <div class="auth-modal-message-error" id="authModalMessage"></div>
+      </div>
+    </div>
+  </div>
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollToPlugin.min.js"></script>
   <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-<script src="/static/script.js"></script>
+  <script src="/static/js/splash-cursor.js"></script>
+  <script src="/static/script.js"></script>
 </body>
 </html>

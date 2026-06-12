@@ -1,179 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>CALCULAIRE™ Elite Access</title>
-
-<style>
-
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
-
-body{
-    background:#050505;
-    min-height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    font-family:Georgia, serif;
-    overflow:hidden;
-    color:white;
-}
-
-/* Background Glow */
-
-body::before{
-    content:"";
-    position:absolute;
-    width:500px;
-    height:500px;
-    background:radial-gradient(circle,#c8a96e20,transparent 70%);
-    top:-150px;
-    right:-150px;
-}
-
-body::after{
-    content:"";
-    position:absolute;
-    width:400px;
-    height:400px;
-    background:radial-gradient(circle,#c8a96e15,transparent 70%);
-    bottom:-100px;
-    left:-100px;
-}
-
-/* Back Button */
-
-.back-btn{
-    position:absolute;
-    top:30px;
-    left:30px;
-    text-decoration:none;
-    color:#c8a96e;
-    border:1px solid #c8a96e;
-    padding:12px 22px;
-    border-radius:10px;
-    transition:.3s;
-}
-
-.back-btn:hover{
-    background:#c8a96e;
-    color:black;
-}
-
-/* Login Card */
-
-.login-card{
-    width:420px;
-    background:rgba(255,255,255,0.03);
-    border:1px solid rgba(200,169,110,.35);
-    backdrop-filter:blur(20px);
-    border-radius:24px;
-    padding:50px;
-    text-align:center;
-    box-shadow:0 0 50px rgba(200,169,110,.15);
-}
-
-.logo{
-    color:#c8a96e;
-    font-size:42px;
-    margin-bottom:8px;
-}
-
-.subtitle{
-    color:#999;
-    letter-spacing:2px;
-    margin-bottom:40px;
-    text-transform:uppercase;
-    font-size:12px;
-}
-
-input{
-    width:100%;
-    padding:16px;
-    margin-bottom:18px;
-    border:none;
-    outline:none;
-    border-radius:12px;
-    background:#101010;
-    color:white;
-    border:1px solid #333;
-    font-size:15px;
-}
-
-input:focus{
-    border-color:#c8a96e;
-}
-
-button{
-    width:100%;
-    padding:16px;
-    border:none;
-    border-radius:12px;
-    cursor:pointer;
-    background:#c8a96e;
-    color:black;
-    font-weight:bold;
-    letter-spacing:1px;
-    transition:.3s;
-}
-
-button:hover{
-    transform:translateY(-2px);
-}
-
-.footer{
-    margin-top:25px;
-    color:#666;
-    font-size:12px;
-}
-
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CALCULAIRE Elite Control Access</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { min-height: 100vh; margin: 0; display: grid; place-items: center; padding: 24px; background: radial-gradient(circle at 80% 10%, #2b2110 0, transparent 32%), #050505; color: #fff; font-family: Inter, system-ui, sans-serif; }
+    a { position: fixed; top: 24px; left: 24px; color: #e0bd72; }
+    main { width: min(420px, 100%); padding: 42px; border: 1px solid #5f4a25; border-radius: 18px; background: rgba(16, 16, 16, .92); box-shadow: 0 30px 100px #000; }
+    h1 { margin: 0; color: #e0bd72; font-family: Georgia, serif; font-size: 2.35rem; }
+    p { color: #999; line-height: 1.6; }
+    form { display: grid; gap: 14px; margin-top: 28px; }
+    label { display: grid; gap: 7px; color: #bbb; font-size: .88rem; }
+    input, button { min-height: 48px; border-radius: 9px; font: inherit; }
+    input { border: 1px solid #333; padding: 0 13px; background: #0b0b0b; color: #fff; }
+    input:focus { outline: 2px solid #e0bd72; outline-offset: 2px; }
+    button { border: 0; background: #d2aa5d; color: #111; font-weight: 800; cursor: pointer; }
+    .error { color: #ff8894; }
+  </style>
 </head>
 <body>
-
-<a href="/" class="back-btn">← Back</a>
-
-<div class="login-card">
-
-    <div class="logo">CALCULAIRE™</div>
-
-    <div class="subtitle">
-        Elite Control Access
-    </div>
-
-    <form method="POST">
-
-        <input
-            type="text"
-            name="username"
-            placeholder="Username"
-            required
-        >
-
-        <input
-            type="password"
-            name="password"
-            placeholder="Password"
-            required
-        >
-
-        <button type="submit">
-            ENTER CONTROL CENTER
-        </button>
-
+  <a href="/">Back to CALCULAIRE</a>
+  <main>
+    <h1>CALCULAIRE&trade;</h1>
+    <p>Restricted control center. Administrator credentials are separate from customer accounts.</p>
+    {% if error %}<p class="error" role="alert">{{ error }}</p>{% endif %}
+    <form method="post">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token }}" />
+      <label>Username<input type="text" name="username" autocomplete="username" required autofocus /></label>
+      <label>Password<input type="password" name="password" autocomplete="current-password" required /></label>
+      <button type="submit">Enter Control Center</button>
     </form>
-
-    <div class="footer">
-        Authorized personnel only
-    </div>
-
-</div>
-
+  </main>
 </body>
 </html>
